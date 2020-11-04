@@ -1,10 +1,10 @@
-import 'package:flutter_weather/models/Coordinate.dart';
+import 'weather.dart';
 
 class City {
   int id;
   String name;
   String country;
-  Coord coord;
+  Coordinate coord;
   int population;
   int timezone;
 

@@ -12,30 +12,30 @@ class HomePage extends StatelessWidget {
         shadowColor: Colors.transparent,
         elevation: 0,
         title: const Text(
-        "Hue",
-        style: TextStyle(color: Colors.black87),
-      ),
-      centerTitle: true,
-      leading: IconButton(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          icon: const Icon(
-            Icons.add,
-            color: Colors.black87,
-          ),
-          onPressed: () {}),
-      actions: [
-        IconButton(
+          "Hue",
+          style: TextStyle(color: Colors.black87),
+        ),
+        centerTitle: true,
+        leading: IconButton(
             splashColor: Colors.transparent,
             highlightColor: Colors.transparent,
             icon: const Icon(
-              Icons.more_vert,
+              Icons.add,
               color: Colors.black87,
             ),
-            onPressed: () {})
-      ],
-    ),
-    body: SafeArea(child: Container()),
+            onPressed: () {}),
+        actions: [
+          IconButton(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              icon: const Icon(
+                Icons.more_vert,
+                color: Colors.black87,
+              ),
+              onPressed: () {})
+        ],
+      ),
+      body: SafeArea(child: Container()),
     );
   }
 }
