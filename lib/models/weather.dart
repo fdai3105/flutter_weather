@@ -22,11 +22,11 @@ class Temp {
   }
 }
 
-class Coordinate {
+class Coord {
   double longitude;
   double latitude;
 
-  Coordinate({this.longitude, this.latitude});
+  Coord({this.longitude, this.latitude});
 
   @override
   String toString() {
@@ -51,7 +51,7 @@ class Weather {
   String weatherText;
   String weatherDesc;
   String weatherIcon;
-  Coordinate coordinate;
+  Coord coordinate;
   Temp temp;
   Wind wind;
   DateTime sunrise;
@@ -76,7 +76,7 @@ class Weather {
       weatherText: json["weather"][0][Params.weatherMain],
       weatherDesc: json["weather"][0][Params.weatherDecs],
       weatherIcon: json["weather"][0][Params.weatherIcon],
-      coordinate: Coordinate(
+      coordinate: Coord(
         longitude: json[Params.coord][Params.coordLon],
         latitude: json[Params.coord][Params.coordLat],
       ),

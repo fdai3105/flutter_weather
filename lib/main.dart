@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_weather/pages/find_city_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'blocs/weather_bloc/weather_bloc.dart';
+import 'repository/weather_repository.dart';
 import 'pages/home_page.dart';
 
 void main() {
-  runApp(MyApp());
+  final _weatherRepository = WeatherRepository();
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider<WeatherBloc>(create: (context) {
+      return WeatherBloc(_weatherRepository)..add(const FetchWeather("Hue"));
+    }),
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

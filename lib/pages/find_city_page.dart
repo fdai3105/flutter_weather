@@ -76,7 +76,7 @@ class FindCityPage extends StatelessWidget {
             else if(state is WeatherIsLoading)
               return Center(child : CircularProgressIndicator());
             else if(state is WeatherIsLoaded)
-              return ShowWeather(state.getWeather, cityController.text);
+              return ShowWeather(state.weather, cityController.text);
             else
               return Text("Error",style: TextStyle(color: Colors.white),);
           },

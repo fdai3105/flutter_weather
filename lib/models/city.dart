@@ -4,7 +4,7 @@ class City {
   int id;
   String name;
   String country;
-  Coordinate coord;
+  Coord coord;
   int population;
   int timezone;
 

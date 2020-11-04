@@ -9,35 +9,26 @@ class WeatherInitial extends WeatherState {
   List<Object> get props => [];
 }
 
-class WeatherIsNotSearched extends WeatherState{
+class WeatherIsNotSearched extends WeatherState {
   @override
-  // TODO: implement props
-  List<Object> get props => throw UnimplementedError();
-
+  List<Object> get props => [];
 }
 
-class WeatherIsLoading extends WeatherState{
+class WeatherIsLoading extends WeatherState {
   @override
-  // TODO: implement props
-  List<Object> get props => throw UnimplementedError();
-
+  List<Object> get props => [];
 }
 
-class WeatherIsLoaded extends WeatherState{
-  final _weather;
+class WeatherIsLoaded extends WeatherState {
+  final Weather weather;
 
-  WeatherIsLoaded(this._weather);
-
-  Weather get getWeather => _weather;
+  const WeatherIsLoaded(this.weather);
 
   @override
-  // TODO: implement props
-  List<Object> get props => [_weather];
+  List<Object> get props => [weather];
 }
 
-class WeatherIsNotLoaded extends WeatherState{
+class WeatherIsNotLoaded extends WeatherState {
   @override
-  // TODO: implement props
-  List<Object> get props => throw UnimplementedError();
-
+  List<Object> get props => [];
 }
