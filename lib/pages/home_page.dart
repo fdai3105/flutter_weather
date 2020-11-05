@@ -1,3 +1,4 @@
+
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _size = MediaQuery.of(context).size;
-    return BlocBuilder<WeatherBloc, WeatherState>(builder: (context, state) {
+    return BlocBuilder<WeatherBloc, WeatherState>(
+        builder: (context, state) {
       if (state is WeatherIsLoaded) {
         return Scaffold(
           extendBodyBehindAppBar: true,
@@ -20,8 +22,7 @@ class HomePage extends StatelessWidget {
             backgroundColor: Colors.transparent,
             shadowColor: Colors.transparent,
             elevation: 0,
-            title: const Text(
-              "Hue",
+            title: Text( "Hue",
               style: TextStyle(color: Colors.white),
             ),
             centerTitle: true,
@@ -58,7 +59,7 @@ class HomePage extends StatelessWidget {
                 Expanded(
                   child: Column(children: [
                     Text(
-                      "${state.weather.temp.temp}°C",
+                      "${state.weather.temp.tempMin}°C",
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 56,
@@ -243,3 +244,4 @@ class WeatherIcon extends StatelessWidget {
     }
   }
 }
+
