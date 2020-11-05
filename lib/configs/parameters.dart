@@ -21,4 +21,7 @@ class Params {
   static const String sunRise = "sunrise";
   static const String sunSet = "sunset";
   static const String timeZone = "timezone";
+  static const String name = "name";
+  static const String sys = "sys";
+  static const String country = "country";
 }
