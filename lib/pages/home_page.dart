@@ -1,13 +1,12 @@
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather/configs/paths.dart';
+import 'package:flutter_weather/configs/routes.dart';
 import '../blocs/weather_bloc/weather_bloc.dart';
 import '../models/weather.dart';
-import '../repository/weather_repository.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -33,7 +32,9 @@ class HomePage extends StatelessWidget {
                   Icons.add,
                   color: Colors.white,
                 ),
-                onPressed: () {}),
+                onPressed: () {
+                  Navigator.pushNamed(context, Routes.find);
+                }),
             actions: [
               IconButton(
                   splashColor: Colors.transparent,
@@ -91,15 +92,15 @@ class HomePage extends StatelessWidget {
 
   ExactAssetImage backgroundImage() {
     final _now = DateTime.now().hour;
-    if (_now <= 11) {
+    if (_now <= 10) {
       // morning
       return const ExactAssetImage(
           "assets/images/backgrounds/background_morning.png");
-    } else if (_now <= 15) {
+    } else if (_now <= 14) {
       // noon
       return const ExactAssetImage(
           "assets/images/backgrounds/background_noon.png");
-    } else if (_now <= 18) {
+    } else if (_now <= 17) {
       // afternoon
       return const ExactAssetImage(
           "assets/images/backgrounds/background_afternoon.png");

@@ -1,9 +1,9 @@
 import 'dart:convert' as convert;
-import 'package:flutter_weather/configs/parameters.dart';
+import 'package:flutter_weather/models/location.dart';
 
+import '../configs/parameters.dart';
 import '../configs/paths.dart';
 import '../models/weather.dart';
-
 import 'repository.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,11 +15,27 @@ class WeatherRepository implements WeatherRepositoryI {
   };
 
   @override
-  Future<void> searchCity(String cityName) async {}
+  Future<List<Location>> searchCity(String cityName) async {
+    if (cityName != null) {
+      final _locations = <Location>[];
+      final _json = await client.get(
+          "${Paths.findCity}?${"q=$cityName"}&${"cnt=5"}&units=metric",
+          headers: _headers);
+      final _jsonResult = convert.jsonDecode(_json.body);
+      final _list = List.from(_jsonResult["list"]);
+      for (final i in _list) {
+        _locations.add(Location.fromJson(i));
+      }
+      return _locations;
+    } else {
+      return [];
+    }
+  }
 
   @override
   Future<Weather> getCurrentWeather(String location) async {
-    final _json = await client.get("${Paths.currentWeather}${"q=$location"}&units=metric&lang=vi",
+    final _json = await client.get(
+        "${Paths.currentWeather}${"q=$location"}&units=metric&lang=vi",
         headers: _headers);
     final _jsonResult = convert.jsonDecode(_json.body);
     return Weather.fromJson(_jsonResult);
