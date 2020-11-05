@@ -19,7 +19,7 @@ class WeatherRepository implements WeatherRepositoryI {
 
   @override
   Future<Weather> getCurrentWeather(String location) async {
-    final _json = await client.get("${Paths.currentWeather}${"q=$location"}",
+    final _json = await client.get("${Paths.currentWeather}${"q=$location"}&units=metric&lang=vi",
         headers: _headers);
     final _jsonResult = convert.jsonDecode(_json.body);
     return Weather.fromJson(_jsonResult);
