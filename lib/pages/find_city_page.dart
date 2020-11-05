@@ -17,7 +17,7 @@ class FindCityPage extends StatelessWidget {
 
         BlocBuilder<WeatherBloc, WeatherState>(
           builder: (context, state){
-            if(state is WeatherIsNotSearched)
+            if(state is WeatherIsNotSearched) {
               return Container(
                 padding: EdgeInsets.only(left: 32, right: 32,),
                 child: Column(
@@ -28,8 +28,7 @@ class FindCityPage extends StatelessWidget {
                     TextFormField(
                       controller: cityController,
 
-                      decoration: InputDecoration(
-
+                      decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.search, color: Colors.white70,),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -73,7 +72,7 @@ class FindCityPage extends StatelessWidget {
                   ],
                 ),
               );
-            else if(state is WeatherIsLoading)
+            } else if(state is WeatherIsLoading)
               return Center(child : CircularProgressIndicator());
             else if(state is WeatherIsLoaded)
               return ShowWeather(state.weather, cityController.text);
