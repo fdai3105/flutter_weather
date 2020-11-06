@@ -38,7 +38,6 @@ class WeatherRepository implements WeatherRepositoryI {
         "${Paths.currentWeather}&${"lon=$lon"}&${"lat=$lat"}&units=metric&lang=vi",
         headers: _headers);
     final _jsonResult = convert.jsonDecode(_json.body);
-    print(_jsonResult);
     return Weather.fromJson(_jsonResult);
   }
 

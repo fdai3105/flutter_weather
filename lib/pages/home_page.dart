@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../blocs/connectivity_bloc/connectivity_bloc.dart';
 import '../configs/routes.dart';
 import '../blocs/weather_bloc/weather_bloc.dart';
 import '../configs/paths.dart';
@@ -12,84 +13,101 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _size = MediaQuery.of(context).size;
-    return BlocBuilder<WeatherBloc, WeatherState>(builder: (context, state) {
-      if (state is WeatherIsLoaded) {
-        return Scaffold(
-          extendBodyBehindAppBar: true,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            shadowColor: Colors.transparent,
-            elevation: 0,
-            title: Text(
-              "${state.weather.cityName}, ${state.weather.countryName}",
-              style: const TextStyle(color: Colors.white),
-            ),
-            centerTitle: true,
-            leading: IconButton(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                icon: const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, Routes.find);
-                }),
-            actions: [
-              IconButton(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  icon: const Icon(
-                    Icons.more_vert,
-                    color: Colors.white,
+    return BlocBuilder<ConnectivityBloc, ConnectivityState>(
+      builder: (context, state) {
+        if (state is ConnectivitySuccess) {
+          return BlocBuilder<WeatherBloc, WeatherState>(
+              builder: (context, state) {
+            if (state is WeatherIsLoaded) {
+              return Scaffold(
+                extendBodyBehindAppBar: true,
+                appBar: AppBar(
+                  backgroundColor: Colors.transparent,
+                  shadowColor: Colors.transparent,
+                  elevation: 0,
+                  title: Text(
+                    "${state.weather.cityName}, ${state.weather.countryName}",
+                    style: const TextStyle(color: Colors.white),
                   ),
-                  onPressed: () {})
-            ],
-          ),
-          body: Container(
-            width: _size.width,
-            padding: const EdgeInsets.only(top: 100),
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: backgroundImage(), fit: BoxFit.cover)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      Text(
-                        "${state.weather.temp.tempMin}°C",
-                        style: const TextStyle(
+                  centerTitle: true,
+                  leading: IconButton(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      icon: const Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, Routes.find);
+                      }),
+                  actions: [
+                    IconButton(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        icon: const Icon(
+                          Icons.more_vert,
                           color: Colors.white,
-                          fontSize: 56,
-                          fontWeight: FontWeight.bold,
+                        ),
+                        onPressed: () {})
+                  ],
+                ),
+                body: Container(
+                  width: _size.width,
+                  padding: const EdgeInsets.only(top: 100),
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: backgroundImage(), fit: BoxFit.cover)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                              "${state.weather.temp.tempMin}°C",
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 56,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              state.weather.weatherDesc,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 26,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Text(
-                        state.weather.weatherDesc,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      WeatherInfo(
+                        weather: state.weather,
                       ),
                     ],
                   ),
                 ),
-                WeatherInfo(
-                  weather: state.weather,
-                ),
-              ],
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          });
+        } else {
+          return const Scaffold(
+            backgroundColor: Colors.black54,
+            body: Center(
+              child: Text(
+                "Pls check your internet",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
-          ),
-        );
-      } else {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      }
-    });
+          );
+        }
+      },
+    );
   }
 
   ExactAssetImage backgroundImage() {
