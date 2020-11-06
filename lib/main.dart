@@ -16,7 +16,6 @@ void main() async {
   final _locationRepository = LocationRepository();
   final _sharedPref = SharedPrefs();
   final _currentLocation = await _locationRepository.getCurrentPosition();
-
   await _sharedPref.saveCurrentLocation(
       _currentLocation.lon, _currentLocation.lat);
 

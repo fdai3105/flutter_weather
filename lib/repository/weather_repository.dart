@@ -1,5 +1,5 @@
 import 'dart:convert' as convert;
-import 'package:flutter_weather/models/location.dart';
+import '../models/location.dart';
 
 import '../configs/params.dart';
 import '../configs/paths.dart';
@@ -38,6 +38,7 @@ class WeatherRepository implements WeatherRepositoryI {
         "${Paths.currentWeather}&${"lon=$lon"}&${"lat=$lat"}&units=metric&lang=vi",
         headers: _headers);
     final _jsonResult = convert.jsonDecode(_json.body);
+    print(_jsonResult);
     return Weather.fromJson(_jsonResult);
   }
 

@@ -57,6 +57,8 @@ class Weather {
   DateTime sunrise;
   DateTime sunset;
   int timeZone;
+  String cityName;
+  String countryName;
 
   Weather(
       {this.id,
@@ -68,7 +70,9 @@ class Weather {
       this.wind,
       this.sunrise,
       this.sunset,
-      this.timeZone});
+      this.timeZone,
+      this.cityName,
+      this.countryName});
 
   factory Weather.fromJson(json) {
     return Weather(
@@ -92,9 +96,13 @@ class Weather {
         speed: json[Params.wind][Params.windSpeed],
         deg: json[Params.wind][Params.windDeg],
       ),
-      sunrise: DateTime.fromMicrosecondsSinceEpoch(json["sys"][Params.sunRise] * 1000),
-      sunset: DateTime.fromMillisecondsSinceEpoch(json["sys"][Params.sunSet] * 1000),
+      sunrise: DateTime.fromMicrosecondsSinceEpoch(
+          json["sys"][Params.sunRise] * 1000),
+      sunset: DateTime.fromMillisecondsSinceEpoch(
+          json["sys"][Params.sunSet] * 1000),
       timeZone: json[Params.timeZone],
+      cityName: json[Params.name],
+      countryName: json[Params.sys][Params.country],
     );
   }
 

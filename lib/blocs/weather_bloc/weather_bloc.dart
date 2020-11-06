@@ -20,14 +20,9 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
   ) async* {
     if (event is FetchWeather) {
       yield WeatherIsLoading();
-      try {
-        final weather =
-            await weatherRepository.getCurrentWeather(event.lon,event.lat);
-        yield WeatherIsLoaded(weather);
-      } catch (_) {
-        print(_);
-        yield WeatherIsNotLoaded();
-      }
+      final weather =
+          await weatherRepository.getCurrentWeather(event.lon, event.lat);
+      yield WeatherIsLoaded(weather);
     } else if (event is ResetWeather) {
       yield WeatherIsNotSearched();
     }

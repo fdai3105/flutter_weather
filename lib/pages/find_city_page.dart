@@ -130,8 +130,8 @@ class FindItem extends StatelessWidget {
         onTap: () {
           SharedPrefs().saveCurrentLocation(location.lon, location.lat);
           context.bloc<WeatherBloc>().add(
-                FetchWeather(location.lon, location.lat),
-              );
+            FetchWeather(location.lon, location.lat),
+          );
           Navigator.pop(context);
         },
         child: Padding(
@@ -141,8 +141,7 @@ class FindItem extends StatelessWidget {
               "${location.cityName} / ${location.countryName}",
             ),
             subtitle:
-                // Text("${location.tempMin}°C - ${location.tempMax}°C"),
-                Text("${location.lon} - ${location.lat}"),
+            Text("${location.tempMin}°C - ${location.tempMax}°C"),
             trailing: Text(
               "${location.temp}°C",
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600),

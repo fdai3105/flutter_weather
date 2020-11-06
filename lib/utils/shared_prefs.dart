@@ -10,7 +10,6 @@ class SharedPrefs {
   }
 
   Future saveCurrentLocation(num lon, num lat) async {
-    print("$lon + $lat");
     await sharedPreferences.setDouble(Params.coordLon, lon);
     await sharedPreferences.setDouble(Params.coordLat, lat);
   }
