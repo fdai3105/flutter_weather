@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_weather/blocs/weather_bloc/weather_bloc.dart';
+import 'package:flutter_weather/utils/shared_prefs.dart';
 import '../models/location.dart';
 import '../repository/weather_repository.dart';
 
@@ -82,29 +85,8 @@ class _FindBodyState extends State<FindBody> {
                       return ListView.builder(
                           itemCount: snapshot.data.length,
                           itemBuilder: (context, index) {
-                            return Container(
-                              margin: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
-                              decoration: BoxDecoration(
-                                  color: Colors.black12,
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 10),
-                                child: ListTile(
-                                  title: Text(
-                                    "${snapshot.data[index].cityName} / ${snapshot.data[index].countryName}",
-                                  ),
-                                  subtitle: Text(
-                                      "${snapshot.data[index].tempMin}°C - ${snapshot.data[index].tempMax}°C"),
-                                  trailing: Text(
-                                    "${snapshot.data[index].temp}°C",
-                                    style: const TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                              ),
+                            return FindItem(
+                              location: snapshot.data[index],
                             );
                           });
                     } else {
@@ -115,14 +97,59 @@ class _FindBodyState extends State<FindBody> {
                   } else {
                     return Container();
                   }
-                } else if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator(),);
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
                 } else {
                   return Container();
                 }
               }),
         )
       ],
+    );
+  }
+}
+
+class FindItem extends StatelessWidget {
+  final Location location;
+
+  const FindItem({
+    Key key,
+    this.location,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      decoration: BoxDecoration(
+          color: Colors.black12, borderRadius: BorderRadius.circular(20)),
+      child: GestureDetector(
+        onTap: () {
+          SharedPrefs().saveCurrentLocation(location.lon, location.lat);
+          context.bloc<WeatherBloc>().add(
+                FetchWeather(location.lon, location.lat),
+              );
+          Navigator.pop(context);
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          child: ListTile(
+            title: Text(
+              "${location.cityName} / ${location.countryName}",
+            ),
+            subtitle:
+                // Text("${location.tempMin}°C - ${location.tempMax}°C"),
+                Text("${location.lon} - ${location.lat}"),
+            trailing: Text(
+              "${location.temp}°C",
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

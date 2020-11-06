@@ -1,6 +1,6 @@
 abstract class WeatherRepositoryI {
   ///
-  void getCurrentWeather(String locationKey);
+  void getCurrentWeather(num lon, num lat);
 
   /// Get 16 days forecast, up to 16days, forecasts include daily weather
   void getWeatherForecast(String location);

@@ -1,4 +1,4 @@
-import 'package:flutter_weather/configs/parameters.dart';
+import '../configs/params.dart';
 
 class Location {
   String cityName;

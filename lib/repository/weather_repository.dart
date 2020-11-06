@@ -1,7 +1,7 @@
 import 'dart:convert' as convert;
 import 'package:flutter_weather/models/location.dart';
 
-import '../configs/parameters.dart';
+import '../configs/params.dart';
 import '../configs/paths.dart';
 import '../models/weather.dart';
 import 'repository.dart';
@@ -33,9 +33,9 @@ class WeatherRepository implements WeatherRepositoryI {
   }
 
   @override
-  Future<Weather> getCurrentWeather(String location) async {
+  Future<Weather> getCurrentWeather(num lon, num lat) async {
     final _json = await client.get(
-        "${Paths.currentWeather}${"q=$location"}&units=metric&lang=vi",
+        "${Paths.currentWeather}&${"lon=$lon"}&${"lat=$lat"}&units=metric&lang=vi",
         headers: _headers);
     final _jsonResult = convert.jsonDecode(_json.body);
     return Weather.fromJson(_jsonResult);

@@ -1,4 +1,4 @@
-import '../configs/parameters.dart';
+import '../configs/params.dart';
 
 class Temp {
   num temp;
@@ -23,8 +23,8 @@ class Temp {
 }
 
 class Coord {
-  double longitude;
-  double latitude;
+  num longitude;
+  num latitude;
 
   Coord({this.longitude, this.latitude});
 
@@ -35,7 +35,7 @@ class Coord {
 }
 
 class Wind {
-  double speed;
+  num speed;
   int deg;
 
   Wind({this.speed, this.deg});

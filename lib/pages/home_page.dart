@@ -1,4 +1,3 @@
-
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather/configs/paths.dart';
 import 'package:flutter_weather/configs/routes.dart';
+import 'package:flutter_weather/repository/location_repository.dart';
 import '../blocs/weather_bloc/weather_bloc.dart';
 import '../models/weather.dart';
 
@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
             backgroundColor: Colors.transparent,
             shadowColor: Colors.transparent,
             elevation: 0,
-            title: Text( "Hue",
+            title: const Text( "Hue",
               style: TextStyle(color: Colors.white),
             ),
             centerTitle: true,
