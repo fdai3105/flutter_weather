@@ -42,12 +42,13 @@ class WeatherRepository implements WeatherRepositoryI {
   }
 
   @override
-  Future<List<Weather>> getWeatherForecast(String location) async {
+  Future<List<Weather>> getWeatherForecast(num lon, num lat) async {
     final _weathers = <Weather>[];
-    final _json = await client.get("${Paths.forecastWeather}${"q=$location"}",
+    final _json = await client.get("${Paths.forecastWeather}&${"lon=$lon"}&${"lat=$lat"}&units=metric&lang=vi",
         headers: _headers);
     final _jsonResult = convert.jsonDecode(_json.body);
     final _listWeathers = List.from(_jsonResult["list"]);
+
     for (final i in _listWeathers) {
       final _tempWeather = i[Params.weather][0];
       final _tempTemp = i[Params.temp];
@@ -59,8 +60,8 @@ class WeatherRepository implements WeatherRepositoryI {
         coordinate: null,
         temp: Temp(
           temp: _tempTemp["day"],
-          tempMin: _tempTemp[Params.tempMin],
-          tempMax: _tempTemp[Params.tempMax],
+          tempMin: _tempTemp["min"],
+          tempMax: _tempTemp["max"],
           pressure: i[Params.pressure],
           humidity: i[Params.humidity],
           feelLike: i[Params.feelLike]["day"],

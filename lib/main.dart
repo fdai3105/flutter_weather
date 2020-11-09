@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_weather/blocs/connectivity_bloc/connectivity_bloc.dart';
+import 'package:flutter_weather/blocs/forecast_bloc/forecast_bloc.dart';
 import 'utils/shared_prefs.dart';
 import 'repository/location_repository.dart';
 import 'configs/routes.dart';
@@ -28,7 +29,12 @@ void main() async {
     }),
     BlocProvider<ConnectivityBloc>(create: (context) {
       return ConnectivityBloc()..add(CheckConnectivityEvent());
-    })
+    }),
+    BlocProvider<ForecastBloc>(create: (context) {
+      return ForecastBloc(_weatherRepository)
+        ..add(FetchForecast(_sharedPref.getCurrentLocation().lon,
+            _sharedPref.getCurrentLocation().lat));
+    }),
   ], child: MyApp()));
 }
 

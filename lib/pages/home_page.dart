@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_weather/blocs/forecast_bloc/forecast_bloc.dart';
+import 'package:intl/intl.dart';
 import '../blocs/connectivity_bloc/connectivity_bloc.dart';
 import '../configs/routes.dart';
 import '../blocs/weather_bloc/weather_bloc.dart';
@@ -82,6 +84,7 @@ class HomePage extends StatelessWidget {
                           ],
                         ),
                       ),
+                      const Forecast(),
                       WeatherInfo(
                         weather: state.weather,
                       ),
@@ -129,6 +132,83 @@ class HomePage extends StatelessWidget {
       return const ExactAssetImage(
           "assets/images/backgrounds/background_night.png");
     }
+  }
+}
+
+class Forecast extends StatelessWidget {
+  const Forecast({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ForecastBloc, ForecastState>(builder: (context, state) {
+      if (state is ForecastSuccess) {
+        return Container(
+          height: 160,
+          child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              physics: const BouncingScrollPhysics(),
+              itemCount: state.weathers.length,
+              itemBuilder: (context, index) {
+                final _date = DateTime.now().add(Duration(days: index));
+                final _isNow = DateTime.now().day == _date.day;
+                return Container(
+                  margin: EdgeInsets.only(left: 5,
+                      right: 5),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+                      child: Container(
+                        width: 100,
+                        color: Colors.white.withOpacity(0.10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              _isNow
+                                  ? "Today"
+                                  : DateFormat("EEEE").format(_date),
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "${state.weathers[index].temp.tempMin.toInt()}°C",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            const Icon(Icons.arrow_drop_down,color: Colors.white,),
+                            Text(
+                              "${state.weathers[index].temp.tempMax.toInt()}°C",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(state.weathers[index].weatherText,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text("${state.weathers[index].wind.speed}m/s",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }),
+        );
+      } else {
+        return Container();
+      }
+    });
   }
 }
 

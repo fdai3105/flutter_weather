@@ -3,7 +3,7 @@ abstract class WeatherRepositoryI {
   void getCurrentWeather(num lon, num lat);
 
   /// Get 16 days forecast, up to 16days, forecasts include daily weather
-  void getWeatherForecast(String location);
+  void getWeatherForecast(num lon, num lat);
 
   /// Input the city name or its part and get the list of the most proper cities in the world.
   void searchCity(String cityName);
